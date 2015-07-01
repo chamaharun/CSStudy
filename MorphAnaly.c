@@ -22,7 +22,7 @@ typedef struct
 typedef struct
 {
     int node_num;
-    DictNode *node[10000];
+    DictNode *nodes[10000];
 } DictTable;
 
 /*--------------------------*/
@@ -48,12 +48,12 @@ DictTable *DictTableAlloc(void)
 {
     DictTable *table;
 
-    list = (DictTable *)malloc(sizeof(DictTable));
-    if (list == NULL) { /* 領域確保失敗 */
+    table = (DictTable *)malloc(sizeof(DictTable));
+    if (table == NULL) { /* 領域確保失敗 */
 	return (NULL);
     }
-    list->node_num = 0;
-    list->head = NULL;
+    table->node_num = 0;
+    
     return (list);
 }
 
