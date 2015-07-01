@@ -183,19 +183,25 @@ DictTable *DictTableMake(char *filename)
 
 
 /*------------------*/
-/* 連結リストの表示関数 */
+/* 表示関数 */
 /*------------------*/
 void DictTablePrint(DictTable *table)
 {
     DictNode *ptr;
-    
-    ptr = list->head;
-    printf("[ ");
-    while (ptr) {
-	printf("%d ", ptr->data);
-	ptr = ptr->next;
+    int i;
+    int n = table->node_num; //nはすでに格納された数/配列の格納先
+
+    for (i=0;i<n;i++){
+        ptr = table->nodes[i];
+
+        printf("word:%s,lid:%d,rid:%d,cost:%d,csv1:%s,csv1:%s,csv2:%s,csv3:%s,csv4:%s,csv5:%s,csv6:%s,csv7:%s,csv8:%s,csv9:%s\n",
+            ptr->word,
+            ptr->id[0],ptr->id[1],
+            ptr->cost,
+            ptr->csv[0],ptr->csv[1],ptr->csv[2],ptr->csv[3],ptr->csv[4],ptr->csv[5],ptr->csv[6],ptr->csv[7],ptr->csv[8])
+
     }
-    printf("]\n");
+    
 }
 
 /*------------------*/
