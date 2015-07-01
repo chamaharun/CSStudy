@@ -61,7 +61,7 @@ DictTable *DictTableAlloc(void)
 /*------------------------*/
 /* データ追加関数 */
 /*------------------------*/
-DictNode *DictTableDataAdd(DictTable* table,char* word,int lid,int rid,int cost,char** csv)
+DictNode *DictTableDataAdd(DictTable* table,char* word,int lid,int rid,int cost,char csv[9][50])
 {
 
 DictNode* new_node;
@@ -97,10 +97,10 @@ return new_node;
 /*----------------*/
 /* テーブル作成関数 */
 /*----------------*/
-DictTable *DictTableMake(char *filename)
+DictTable *DictTableMake(FILE *fp)
 {
     int i;
-    FILE *fp;
+
     char *tp;
     DictTable *table;
     char buffer[100];
@@ -111,11 +111,12 @@ DictTable *DictTableMake(char *filename)
     char csv[9][50];
 
 
-    /* ファイル有無のチェック */
+    /* ファイル有無のチェック 
     if ((fp = fopen(filename, "r")) == NULL) {
 	fprintf(stderr, "No Such File : %s\n", filename);
 	exit (1);
     }
+    */
 
     table = DictTableAlloc();
     if (table == NULL) { /* 領域確保失敗 */
@@ -127,7 +128,9 @@ DictTable *DictTableMake(char *filename)
         tp = strtok( buffer, "," );
         strcpy(word,tp);
         while ( tp != NULL ) {
+           
             tp = strtok( NULL,"," );
+            i++;
                 if ( tp != NULL ) {
                     switch (i){
                         case 1:
@@ -202,4 +205,18 @@ void DictTablePrint(DictTable *table)
 
     }
     
+}
+
+int main(void){
+
+  DictTable* table;
+
+
+
+  table = DictTableMake(stdin);
+  
+  DictTablePrint(table);
+
+
+  return 0;
 }
