@@ -63,9 +63,10 @@ DictTable *DictTableAlloc(void)
 /*------------------------*/
 DictNode *DictTableDataAdd(DicTable* table,char* word,int lid,int rid,int cost,char* csv[0],csv[1],csv[2],csv[3],csv[4],csv[5],csv[6],csv[7],csv[8])
 {
-DictNode* new_node;
 
-int n = table->node_num //nはすでに格納された数/配列の格納先
+DictNode* new_node;
+int i;
+int n = table->node_num; //nはすでに格納された数/配列の格納先
 
 new_node = LinkedListNodeAlloc();
         if (new_node == NULL) { /* 領域確保失敗 */
@@ -73,7 +74,18 @@ new_node = LinkedListNodeAlloc();
         }
 
 
-new_node->word = 
+strcpy(new_node->word ,word);
+new_node->id[0] = lid;
+new_node->id[1] = rid;
+new_node->cost = cost;
+
+
+for (i=0;i<9;i++){
+    strcpy(new_node->csv[i],csv[i]);
+}
+
+
+
 
 
 table->nodes[n] = new_node;
