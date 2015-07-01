@@ -71,6 +71,11 @@ new_node = LinkedListNodeAlloc();
         if (new_node == NULL) { /* 領域確保失敗 */
         exit (0); /* 終了 */
         }
+
+
+new_node->word = 
+
+
 table->nodes[n] = new_node;
 table->nodes++;
 
@@ -85,9 +90,11 @@ return new_node;
 /*----------------*/
 DictTable *DictTableMake(char *filename)
 {
+   
     FILE *fp;
+    char *tp;
     DictTable *table;
-    char buffer[MAXBUFFERSIZE];
+    char buffer[100];
 
     /* ファイル有無のチェック */
     if ((fp = fopen(filename, "r")) == NULL) {
@@ -95,12 +102,28 @@ DictTable *DictTableMake(char *filename)
 	exit (1);
     }
 
-    list = DictTableAlloc();
-    if (list == NULL) { /* 領域確保失敗 */
+    table = DictTableAlloc();
+    if (table == NULL) { /* 領域確保失敗 */
 	exit (0); /* 終了 */
     }
 
-    while (fgets(buffer, MAXBUFFERSIZE, fp)) { /* ファイル終端に到達するまでループ */
+    while(fscanf(fp,buffer,%s)!=EOF){}
+    tp = strtok( str, "," );
+    puts( tp );
+    while ( tp != NULL ) {
+        tp = strtok( NULL,"," );
+            if ( tp != NULL ) puts( tp );
+    }
+
+}
+
+
+
+
+
+
+
+    while () { /* ファイル終端に到達するまでループ */
 	buffer[strlen(buffer) - 1] = '\0'; /* 改行文字を削除 */
 	DictTableDataAdd(list, atoi(buffer));
     }
