@@ -22,7 +22,7 @@ typedef struct
 typedef struct
 {
     int node_num;
-    DictNode *nodes[10000];
+    DictNode *nodes[TABLESIZE];
 } DictTable;
 
 /*--------------------------*/
@@ -61,14 +61,14 @@ DictTable *DictTableAlloc(void)
 /*------------------------*/
 /* データ追加関数 */
 /*------------------------*/
-DictNode *DictTableDataAdd(DicTable* table,char* word,int lid,int rid,int cost,char* csv[0],csv[1],csv[2],csv[3],csv[4],csv[5],csv[6],csv[7],csv[8])
+DictNode *DictTableDataAdd(DictTable* table,char* word,int lid,int rid,int cost,char** csv)
 {
 
 DictNode* new_node;
 int i;
 int n = table->node_num; //nはすでに格納された数/配列の格納先
 
-new_node = LinkedListNodeAlloc();
+new_node = DictNodeAlloc();
         if (new_node == NULL) { /* 領域確保失敗 */
         exit (0); /* 終了 */
         }
@@ -86,7 +86,7 @@ for (i=0;i<9;i++){
 
 
 table->nodes[n] = new_node;
-table->nodes++;
+table->node_num++;
 
 return new_node;
 
@@ -122,7 +122,7 @@ DictTable *DictTableMake(char *filename)
 	exit (0); /* 終了 */
     }
 
-    while(fscanf(fp,buffer,%s)!=EOF){
+    while(fscanf(fp,"%s",buffer)!=EOF){
         i=0;
         tp = strtok( buffer, "," );
         strcpy(word,tp);
@@ -171,7 +171,7 @@ DictTable *DictTableMake(char *filename)
 
                 }
         }
-        DictTableDataAdd(table,word,id[0],id[1],cost,csv[0],csv[1],csv[2],csv[3],csv[4],csv[5],csv[6],csv[7],csv[8]); 
+        DictTableDataAdd(table,word,id[0],id[1],cost,csv); 
 
     }
 
@@ -194,11 +194,11 @@ void DictTablePrint(DictTable *table)
     for (i=0;i<n;i++){
         ptr = table->nodes[i];
 
-        printf("word:%s,lid:%d,rid:%d,cost:%d,csv1:%s,csv1:%s,csv2:%s,csv3:%s,csv4:%s,csv5:%s,csv6:%s,csv7:%s,csv8:%s,csv9:%s\n",
+        printf("word:%s,lid:%d,rid:%d,cost:%d,csv1:%s,csv2:%s,csv3:%s,csv4:%s,csv5:%s,csv6:%s,csv7:%s,csv8:%s,csv9:%s\n",
             ptr->word,
             ptr->id[0],ptr->id[1],
             ptr->cost,
-            ptr->csv[0],ptr->csv[1],ptr->csv[2],ptr->csv[3],ptr->csv[4],ptr->csv[5],ptr->csv[6],ptr->csv[7],ptr->csv[8])
+            ptr->csv[0],ptr->csv[1],ptr->csv[2],ptr->csv[3],ptr->csv[4],ptr->csv[5],ptr->csv[6],ptr->csv[7],ptr->csv[8]);
 
     }
     
