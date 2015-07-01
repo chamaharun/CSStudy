@@ -90,11 +90,17 @@ return new_node;
 /*----------------*/
 DictTable *DictTableMake(char *filename)
 {
-   
+    int i;
     FILE *fp;
     char *tp;
     DictTable *table;
     char buffer[100];
+
+    char word[20];
+    int id[2];
+    int cost;
+    char csv[9][50];
+
 
     /* ファイル有無のチェック */
     if ((fp = fopen(filename, "r")) == NULL) {
@@ -107,15 +113,42 @@ DictTable *DictTableMake(char *filename)
 	exit (0); /* 終了 */
     }
 
-    while(fscanf(fp,buffer,%s)!=EOF){}
-    tp = strtok( str, "," );
-    puts( tp );
-    while ( tp != NULL ) {
-        tp = strtok( NULL,"," );
-            if ( tp != NULL ) puts( tp );
+    while(fscanf(fp,buffer,%s)!=EOF){
+        i=0;
+        tp = strtok( buffer, "," );
+        strcpy(word,tp);
+        while ( tp != NULL ) {
+            tp = strtok( NULL,"," );
+                if ( tp != NULL ) {
+                    switch (i){
+                        case 1:
+                            id[0] = atoi(tp)
+
+                            break;
+                        case 2:break;
+                        case 3:break;
+                        case 4:break;
+                        case 5:break;
+                        case 6:break;
+                        case 7:break;
+                        case 8:break;
+                        case 9:break;
+                        case 1:break;
+                        case 1:break;
+                        case 1:break;
+
+                    }
+
+
+
+
+
+
+
+            }
     }
 
-}
+    }
 
 
 
