@@ -85,9 +85,6 @@ for (i=0;i<9;i++){
 }
 
 
-
-
-
 table->nodes[n] = new_node;
 table->nodes++;
 
@@ -178,19 +175,9 @@ DictTable *DictTableMake(char *filename)
 
     }
 
-
-
-
-
-
-
-    while () { /* ファイル終端に到達するまでループ */
-	buffer[strlen(buffer) - 1] = '\0'; /* 改行文字を削除 */
-	DictTableDataAdd(list, atoi(buffer));
-    }
     fclose(fp);
 
-    return (list);
+    return (table);
 }
 
 
