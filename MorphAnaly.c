@@ -203,19 +203,3 @@ void DictTablePrint(DictTable *table)
     }
     
 }
-
-/*------------------*/
-/* 連結リストの中身を線形探索 */
-/*------------------*/
-DictNode *DictTableSearch(DictTable *table,int x)
-{
-    DictNode *ptr;
-    
-    ptr = list->head;
-    while (ptr) {
-      if (ptr->data == x) return ptr;
-    ptr = ptr->next;
-    }
-    return NULL;
-}
-
