@@ -122,31 +122,47 @@ DictTable *DictTableMake(char *filename)
                 if ( tp != NULL ) {
                     switch (i){
                         case 1:
-                            id[0] = atoi(tp)
-
+                            id[0] = atoi(tp);
                             break;
-                        case 2:break;
-                        case 3:break;
-                        case 4:break;
-                        case 5:break;
-                        case 6:break;
-                        case 7:break;
-                        case 8:break;
-                        case 9:break;
-                        case 1:break;
-                        case 1:break;
-                        case 1:break;
+                        case 2:
+                            id[1] = atoi(tp);
+                            break;
+                        case 3:
+                            cost = atoi(tp);
+                            break;
+                        case 4:
+                            strcpy(csv[0],tp);
+                            break;
+                        case 5:
+                            strcpy(csv[1],tp);
+                            break;
+                        case 6:
+                            strcpy(csv[2],tp);
+                            break;
+                        case 7:
+                            strcpy(csv[3],tp);
+                            break;
+                        case 8:
+                            strcpy(csv[4],tp);
+                            break;
+                        case 9:
+                            strcpy(csv[5],tp);
+                            break;
+                        case 10:
+                            strcpy(csv[6],tp);
+                            break;
+                        case 11:
+                            strcpy(csv[7],tp);
+                            break;
+                        case 12:
+                            strcpy(csv[8],tp);
+                            break;
 
                     }
 
-
-
-
-
-
-
-            }
-    }
+                }
+        }
+        
 
     }
 
