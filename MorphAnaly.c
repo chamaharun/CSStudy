@@ -61,7 +61,7 @@ DictTable *DictTableAlloc(void)
 /*------------------------*/
 /* データ追加関数 */
 /*------------------------*/
-DictNode *DictTableDataAdd(DictTable *table, int x)
+DictNode *DictTableDataAdd(DicTable* table,char* word,int lid,int rid,int cost,char* csv[0],csv[1],csv[2],csv[3],csv[4],csv[5],csv[6],csv[7],csv[8])
 {
 DictNode* new_node;
 
@@ -162,7 +162,7 @@ DictTable *DictTableMake(char *filename)
 
                 }
         }
-        
+        DictTableDataAdd(table,word,id[0],id[1],cost,csv[0],csv[1],csv[2],csv[3],csv[4],csv[5],csv[6],csv[7],csv[8]); 
 
     }
 
