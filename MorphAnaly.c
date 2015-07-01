@@ -5,48 +5,50 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAXBUFFERSIZE 256
+#define TABLESIZE 10000
 
 /*-------*/
 /* 構造体 */
 /*-------*/
-typedef struct node
+typedef struct 
 {
-    int  data;
-    struct node *next;
-} LinkedListNode;
+    char word[20];
+    int id[2];
+    int cost;
+    char csv[9][50];
 
+} DictNode;
 
 typedef struct
 {
     int node_num;
-    LinkedListNode *head;
-} LinkedList;
-
+    DictNode *node[10000];
+} DictTable;
 
 /*--------------------------*/
-/* 連結リストノードの領域確保関数 */
+/* ノードの領域確保関数 */
 /*--------------------------*/
-LinkedListNode *LinkedListNodeAlloc(void)
+DictNode *DictNodeAlloc(void)
 {
-    LinkedListNode *node;
-    node = (LinkedListNode *)malloc(sizeof(LinkedListNode));
+    DictNode *node;
+    node = (DictNode *)malloc(sizeof(DictNode));
     if (node == NULL) { /* 領域確保失敗 */
 	return (NULL);
     }
-    node->next = NULL;
+    
+
     return (node);
 }
 
 
 /*---------------------*/
-/* 連結リストの領域確保関数 */
+/* テーブルの領域確保関数 */
 /*---------------------*/
-LinkedList *LinkedListAlloc(void)
+DictTable *DictTableAlloc(void)
 {
-    LinkedList *list;
+    DictTable *table;
 
-    list = (LinkedList *)malloc(sizeof(LinkedList));
+    list = (DictTable *)malloc(sizeof(DictTable));
     if (list == NULL) { /* 領域確保失敗 */
 	return (NULL);
     }
@@ -59,11 +61,11 @@ LinkedList *LinkedListAlloc(void)
 /*------------------------*/
 /* 連結リストへのデータ追加関数 */
 /*------------------------*/
-LinkedListNode *LinkedListDataAdd(LinkedList *list, int x)
+DictNode *DictTableDataAdd(DictTable *table, int x)
 {
-    LinkedListNode *ptr; /* 注目するノードへのポインタ */
-    LinkedListNode *prev; /* 直前ノードへのポインタ */
-    LinkedListNode *new_node;
+    DictNode *ptr; /* 注目するノードへのポインタ */
+    DictNode *prev; /* 直前ノードへのポインタ */
+    DictNode *new_node;
 
     ptr = list->head;
     prev = NULL;
@@ -75,7 +77,7 @@ LinkedListNode *LinkedListDataAdd(LinkedList *list, int x)
 	} else if (ptr->data == x) { /* x は登録済み */
 	    return (NULL);
 	} else { /* x を注目ノードの直前に追加 */
-	    new_node = LinkedListNodeAlloc();
+	    new_node = DictNodeAlloc();
 	    if (new_node == NULL) { /* 領域確保失敗 */
 		exit (0); /* 終了 */
 	    }
@@ -92,7 +94,7 @@ LinkedListNode *LinkedListDataAdd(LinkedList *list, int x)
     }
     /* 終端ノードに到達 */
     /* x を終端に追加 */
-    new_node = LinkedListNodeAlloc();
+    new_node = DictNodeAlloc();
     if (new_node == NULL) { /* 領域確保失敗 */
 	exit (0); /* 終了 */
     }
@@ -111,10 +113,10 @@ LinkedListNode *LinkedListDataAdd(LinkedList *list, int x)
 /*--------------------------*/
 /* 連結リストからのデータ削除関数 */
 /*--------------------------*/
-int LinkedListDataDel(LinkedList *list, int x)
+int DictTableDataDel(DictTable *table, int x)
 {
-    LinkedListNode *ptr; /* 注目するノードへのポインタ */
-    LinkedListNode *prev; /* 直前ノードへのポインタ */
+    DictNode *ptr; /* 注目するノードへのポインタ */
+    DictNode *prev; /* 直前ノードへのポインタ */
 
     ptr = list->head;
     prev = NULL;
@@ -145,10 +147,10 @@ int LinkedListDataDel(LinkedList *list, int x)
 /*----------------*/
 /* 連結リスト作成関数 */
 /*----------------*/
-LinkedList *LinkedListMake(char *filename)
+DictTable *DictTableMake(char *filename)
 {
     FILE *fp;
-    LinkedList *list;
+    DictTable *table;
     char buffer[MAXBUFFERSIZE];
 
     /* ファイル有無のチェック */
@@ -157,14 +159,14 @@ LinkedList *LinkedListMake(char *filename)
 	exit (1);
     }
 
-    list = LinkedListAlloc();
+    list = DictTableAlloc();
     if (list == NULL) { /* 領域確保失敗 */
 	exit (0); /* 終了 */
     }
 
     while (fgets(buffer, MAXBUFFERSIZE, fp)) { /* ファイル終端に到達するまでループ */
 	buffer[strlen(buffer) - 1] = '\0'; /* 改行文字を削除 */
-	LinkedListDataAdd(list, atoi(buffer));
+	DictTableDataAdd(list, atoi(buffer));
     }
     fclose(fp);
 
@@ -175,10 +177,10 @@ LinkedList *LinkedListMake(char *filename)
 /*---------------------*/
 /* 連結リストの領域開放関数 */
 /*---------------------*/
-void LinkedListFree(LinkedList *list)
+void DictTableFree(DictTable *table)
 {
-    LinkedListNode *ptr; /* 注目ノードへのポインタ */
-    LinkedListNode *rem; /* 削除ノード */
+    DictNode *ptr; /* 注目ノードへのポインタ */
+    DictNode *rem; /* 削除ノード */
 
     ptr = list->head;
 
@@ -194,9 +196,9 @@ void LinkedListFree(LinkedList *list)
 /*------------------*/
 /* 連結リストの表示関数 */
 /*------------------*/
-void LinkedListPrint(LinkedList *list)
+void DictTablePrint(DictTable *table)
 {
-    LinkedListNode *ptr;
+    DictNode *ptr;
     
     ptr = list->head;
     printf("[ ");
@@ -210,9 +212,9 @@ void LinkedListPrint(LinkedList *list)
 /*------------------*/
 /* 連結リストの中身を線形探索 */
 /*------------------*/
-LinkedListNode *LinkedListSearch(LinkedList *list,int x)
+DictNode *DictTableSearch(DictTable *table,int x)
 {
-    LinkedListNode *ptr;
+    DictNode *ptr;
     
     ptr = list->head;
     while (ptr) {
