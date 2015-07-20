@@ -5,17 +5,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define TABLESIZE 10000
+#define TABLESIZE 150000
 
 /*-------*/
 /* 構造体 */
 /*-------*/
 typedef struct 
 {
-    char word[20];
+    char word[100];
     int id[2];
     int cost;
-    char csv[9][50];
+    char csv[9][100];
 
 } DictNode;
 
@@ -61,7 +61,7 @@ DictTable *DictTableAlloc(void)
 /*------------------------*/
 /* データ追加関数 */
 /*------------------------*/
-DictNode *DictTableDataAdd(DictTable* table,char* word,int lid,int rid,int cost,char csv[9][50])
+DictNode *DictTableDataAdd(DictTable* table,char* word,int lid,int rid,int cost,char csv[9][100])
 {
 
 DictNode* new_node;
@@ -103,12 +103,12 @@ DictTable *DictTableMake(FILE *fp)
 
     char *tp;
     DictTable *table;
-    char buffer[100];
+    char buffer[200];
 
-    char word[20];
+    char word[100];
     int id[2];
     int cost;
-    char csv[9][50];
+    char csv[9][100];
 
 
     /* ファイル有無のチェック 
@@ -122,6 +122,7 @@ DictTable *DictTableMake(FILE *fp)
     if (table == NULL) { /* 領域確保失敗 */
 	exit (0); /* 終了 */
     }
+  
 
     while(fscanf(fp,"%s",buffer)!=EOF){
         i=0;
@@ -177,10 +178,10 @@ DictTable *DictTableMake(FILE *fp)
         DictTableDataAdd(table,word,id[0],id[1],cost,csv); 
 
     }
+  
 
-    fclose(fp);
 
-    return (table);
+    return table;
 }
 
 
@@ -212,8 +213,9 @@ int main(void){
   DictTable* table;
 
 
-
+  //DictTableMake(stdin);
   table = DictTableMake(stdin);
+  //printf("returned!!!");
   
   DictTablePrint(table);
 
